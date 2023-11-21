@@ -3,6 +3,7 @@ import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
 import http from "http"
+import mongoose, { mongo } from "mongoose"
 import authRoute from "./routes/auth.js"
 import roomRoute from "./routes/room.js"
 import userRoute from "./routes/user.js"
@@ -11,6 +12,10 @@ dotenv.config()
 //server created!
 const app = express()
 const server = http.createServer(app)
+//mongo db connection
+mongoose.connect(process.env.MONGO_URL).then(()=>{console.log("Conneceted to db!")}).catch((error)=>{
+    console.log(error)
+})
 //middlewares initialization
 app.use(cors())
 //routes initialization
