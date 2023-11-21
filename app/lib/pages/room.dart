@@ -10,6 +10,7 @@ class RoomPage extends StatefulWidget {
 }
 
 class _RoomPageState extends State<RoomPage> {
+  // List<Room> rooms = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -22,6 +23,7 @@ class _RoomPageState extends State<RoomPage> {
       var res = await http
           .get(Uri.parse("http://10.0.2.2:5001/api/rooms/getAllRoom"));
       if (res.statusCode == 200) {
+        print(res.body);
         // RoomModel.fromJson(res.body);
       } else {
         print("Response error!");

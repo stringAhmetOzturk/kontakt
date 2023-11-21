@@ -3,7 +3,7 @@ import Room from "../models/room.js"
 export const getAllRoom = async (req,res) => {
    try {
     const rooms = await Room.find()
-    res.status(201).send(rooms)
+    res.status(200).send(rooms)
    } catch (error) {
     console.log(error)
     res.status(501).send("Error")
@@ -25,7 +25,7 @@ export const createRoom = async (req,res) => {
     try {
         const room = new Room({name:"Oda 1",capacity:5})
         await room.save()
-        res.status(201).send(room)
+        res.status(200).send(room)
     } catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
@@ -36,7 +36,7 @@ export const deleteRoom = async (req,res) => {
     try {
         const id = req.params.id
         await Room.deleteOne({id})
-        res.status(201).send(`${id} deleted`)
+        res.status(200).send(`${id} deleted`)
     } catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
