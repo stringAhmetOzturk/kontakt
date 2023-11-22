@@ -22,8 +22,12 @@ export const getRoom = async (req,res) => {
 }
 //create a room
 export const createRoom = async (req,res) => {
+    const ownerName = req.body.ownerName
+    const ownerId = req.body.ownerId
+    const capacity = req.body.capacity
+    const roomName = req.body.roomName
     try {
-        const room = new Room({name:"Oda 1",capacity:5})
+        const room = new Room({roomName:roomName,capacity:capacity,ownerName:ownerName,ownerId:ownerId,users:[{userName:ownerName,userId:ownerId}]})
         await room.save()
         res.status(200).send(room)
     } catch (error) {
