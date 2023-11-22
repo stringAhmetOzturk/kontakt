@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/models/roomModel.dart';
+import 'package:app/pages/roomDetail.dart';
 import 'package:app/widgets/roomCard.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -79,7 +80,31 @@ class _RoomPageState extends State<RoomPage> {
           future: fetchRooms()),
       floatingActionButton: ElevatedButton(
         child: Icon(Icons.add),
-        onPressed: () => createRoom(),
+        onPressed: () => showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text('Create a room'),
+            content: const Text('AlertDialog description'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'Cancel'),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  var room = createRoom();
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RoomDetail(room: room)),
+                  );
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
