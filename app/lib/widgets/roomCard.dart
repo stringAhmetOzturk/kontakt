@@ -9,31 +9,61 @@ class RoomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => RoomDetail(room: room)),
-      ),
-      child: ListTile(
-        title: Text("Room: ${room.roomName}"),
-        subtitle: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Owner Name: ${room.ownerName}"),
-                Text("Owner ID: ${room.ownerId}"),
-              ],
+        onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RoomDetail(room: room)),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Room ID: ${room.id}"),
-                Text("For ${room.capacity} people"),
-              ],
+        child: ListTile(
+          title: Text(
+            "Room: ${room.roomName}",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18.0,
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+          subtitle: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Owner Name: ${room.ownerName}",
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  Text(
+                    "Owner ID: ${room.ownerId}",
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Room ID: ${room.id}",
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.green,
+                    ),
+                  ),
+                  Text(
+                    "For ${room.capacity} people",
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.green,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          contentPadding: EdgeInsets.all(16.0), // Adjust as needed
+        ));
   }
 }

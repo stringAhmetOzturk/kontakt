@@ -28,11 +28,11 @@ app.use("/api/users",userRoute)
 //socket.io connection
 const io = new Server(server);
 io.on("connection", (socket) => {
-    var users = []
-    users.push({"socketId":socket.id})
+    // var users = []
+    // users.push({"socketId":socket.id})
     console.log("connected " + socket.id);
     socket.emit("event",`your id is ${socket.id}`)
-    console.log(users)
+    // console.log(users)
 
 })
 //server started!

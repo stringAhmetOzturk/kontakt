@@ -11,6 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Kontakt', debugShowCheckedModeBanner: false, home: RoomPage());
+        theme: ThemeData.dark(),
+        title: 'Kontakt',
+        debugShowCheckedModeBanner: false,
+        home: RoomPage());
   }
 }

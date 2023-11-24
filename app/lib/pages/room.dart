@@ -29,7 +29,7 @@ class _RoomPageState extends State<RoomPage> {
     }
   }
 
-  Future<void> createRoom() async {
+  Future<RoomModel?> createRoom() async {
     try {
       var res = await http
           .post(Uri.parse("http://10.0.2.2:5001/api/rooms/createRoom"),
@@ -41,13 +41,13 @@ class _RoomPageState extends State<RoomPage> {
               }),
               headers: {"content-type": "application/json"});
       if (res.statusCode == 200) {
-        print("created");
         setState(() {});
+        return RoomModel.fromMap(json.decode(res.body));
       } else {
-        print("Response error!");
+        return null;
       }
     } catch (e) {
-      print(e);
+      return null;
     }
   }
 
@@ -71,6 +71,7 @@ class _RoomPageState extends State<RoomPage> {
                 if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return Center(child: Text('No rooms found.'));
                 }
+
                 return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) =>
@@ -91,14 +92,39 @@ class _RoomPageState extends State<RoomPage> {
                 child: const Text('Cancel'),
               ),
               TextButton(
-                onPressed: () {
-                  var room = createRoom();
+                onPressed: () async {
+                  var room = await createRoom();
                   Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RoomDetail(room: room)),
-                  );
+
+                  if (room != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RoomDetail(
+                            room: RoomModel(
+                                capacity: room.capacity,
+                                id: room.id,
+                                ownerId: room.ownerId,
+                                ownerName: room.ownerName,
+                                roomName: room.roomName)),
+                      ),
+                    );
+                  } else {
+                    // Handle the case where creating a room failed
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('Error'),
+                        content: const Text('Failed to create a room.'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                 },
                 child: const Text('OK'),
               ),
