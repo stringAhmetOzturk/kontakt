@@ -1,23 +1,48 @@
 import 'dart:convert';
-
-import 'package:app/models/roomModel.dart';
-import 'package:app/pages/roomDetail.dart';
-import 'package:app/widgets/roomCard.dart';
+import 'package:app/features/rooms/presentation/pages/roomDetail.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:app/features/rooms/data/models/roomModel.dart';
+import 'package:app/features/rooms/presentation/widgets/roomCard.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class RoomPage extends StatefulWidget {
-  const RoomPage({super.key});
+class HomePage extends StatefulWidget {
+  final String userId;
+  const HomePage({super.key, required this.userId});
 
   @override
-  State<RoomPage> createState() => _RoomPageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _RoomPageState extends State<RoomPage> {
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    initializeSocket();
+  }
+
+  Future<void> initializeSocket() async {
+    try {
+      // IO.Socket socket = IO.io('http://10.0.2.2:5001', <String, dynamic>{
+      IO.Socket socket = IO.io('http://localhost:5001', <String, dynamic>{
+        "transports": ["websocket"],
+        "autoConnect": false
+      });
+      socket.connect();
+      socket.emit("signin", widget.userId);
+      socket.onConnect((_) {
+        print('connected');
+      });
+    } catch (e) {
+      print('Error initializing socket: $e');
+    }
+  }
+
   Future<List<RoomModel>> fetchRooms() async {
     try {
       var res = await http
-          .get(Uri.parse("http://10.0.2.2:5001/api/rooms/getAllRoom"));
+          // .get(Uri.parse("http://10.0.2.2:5001/api/rooms/getAllRoom"));
+          .get(Uri.parse("http://localhost:5001/api/rooms/getAllRoom"));
 
       if (res.statusCode == 200) {
         return roomModelFromMap(res.body);
@@ -32,7 +57,8 @@ class _RoomPageState extends State<RoomPage> {
   Future<RoomModel?> createRoom() async {
     try {
       var res = await http
-          .post(Uri.parse("http://10.0.2.2:5001/api/rooms/createRoom"),
+          // .post(Uri.parse("http://10.0.2.2:5001/api/rooms/createRoom"),
+          .post(Uri.parse("http://localhost:5001/api/rooms/createRoom"),
               body: jsonEncode({
                 "ownerName": "testAhmet",
                 "ownerId": 1,

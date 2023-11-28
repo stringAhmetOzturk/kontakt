@@ -1,5 +1,5 @@
-import 'package:app/models/roomModel.dart';
-import 'package:app/pages/roomDetail.dart';
+import 'package:app/features/rooms/data/models/roomModel.dart';
+import 'package:app/features/rooms/presentation/pages/roomDetail.dart';
 import 'package:flutter/material.dart';
 
 class RoomCard extends StatelessWidget {

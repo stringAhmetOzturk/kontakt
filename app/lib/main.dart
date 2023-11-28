@@ -1,4 +1,4 @@
-import 'package:app/pages/room.dart';
+import 'package:app/features/auth/presentation/pages/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,6 +14,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.dark(),
         title: 'Kontakt',
         debugShowCheckedModeBanner: false,
-        home: RoomPage());
+        home: const LoginPage());
   }
 }
