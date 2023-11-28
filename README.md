@@ -9,12 +9,15 @@ The technologies have been used in this project are:
 -Test Driven Development.
 
 # Admin Dashboard
--React.js.
+-Next.js
+-Typescript
 -Tailwind for css.
 
 # Server
--Node.js
+-Node.js (Express.js)
 -MongoDB
 -Socket.io
 -Redis for caching datas.
 -Docker for container.
+
+Admin dashboard and server will be published on Linux server.
