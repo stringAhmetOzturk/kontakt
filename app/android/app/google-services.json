@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "356465475572",
+    "project_id": "kontakt-d4d5c",
+    "storage_bucket": "kontakt-d4d5c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356465475572:android:e5521e3d2cb30e883e03a1",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWTK9Yf2yjONpw4AuYjAHc-QV-PEO6rPc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

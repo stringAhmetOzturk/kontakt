@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:app/features/auth/presentation/pages/register.dart';
 import 'package:app/features/rooms/presentation/pages/room.dart';
-import 'package:app/features/users/data/models/userModel.dart';
+import 'package:app/features/auth/data/models/authModel.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,14 +16,24 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    analytics.setAnalyticsCollectionEnabled(true);
+  }
 
   void _registerUser() async {
     final String username = _usernameController.text;
     final String password = _passwordController.text;
+
     try {
-      var res = await http
-          // .post(Uri.parse("http://10.0.2.2:5001/api/rooms/createRoom"),
-          .post(Uri.parse("http://localhost:5001/api/auth/login"),
+      await analytics
+          .logEvent(name: "Login", parameters: {"username": username});
+      var res =
+          await http.post(Uri.parse("http://10.0.2.2:5001/api/auth/login"),
               body: jsonEncode({
                 "username": username,
                 "password": password,
@@ -48,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register'),
+        title: Text('Login'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

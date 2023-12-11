@@ -12,8 +12,8 @@ export const getAllRoom = async (req,res) => {
 //get single room
 export const getRoom = async (req,res) => {
     try {
-        const id = req.params.id
-        const room = await Room.findById(id)
+        const roomId = req.params.id
+        const room = await Room.findById(roomId)
         res.status(200).send(room)
     } catch (error) {
         console.log(error)
